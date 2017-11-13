@@ -27,16 +27,12 @@ public class ProductService {
 	}
 	
 	public Product getProductName(int prd_id){
-		System.out.println("getProductByID, prd_id:"+prd_id+","+productrepository);
 		Product prd = productrepository.getProductByID(prd_id);
 		return prd; 
 	}
 	
 	public Product addProduct(Product product) throws SQLException{
-		
-		System.out.println("Product Service: addProduct:"+product.getProductName());
 		int status = productrepository.addProduct(product);
-		System.out.println("status:"+status);
 		Product prodObj = null;
 		
 		if(status == 1){

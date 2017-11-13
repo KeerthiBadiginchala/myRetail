@@ -17,7 +17,7 @@ import com.kb.myRetailRestApi.service.ProductService;
 
 
 @RestController
-@RequestMapping("/myretail/productdetails")
+@RequestMapping("/myretail/productName")
 public class ProductNameController {
 	@Autowired
 	public ProductService productservice;
@@ -36,7 +36,6 @@ public class ProductNameController {
 
     @RequestMapping(value = "/products", method=RequestMethod.POST)
     public Product addProduct(@RequestBody Product prd){
-    	System.out.println("Inside addproduct, prd"+prd.getProductName());
     	Product prdObj = null;
 		try {
 			prdObj = productservice.addProduct(prd);
@@ -50,14 +49,12 @@ public class ProductNameController {
     @RequestMapping(value = "/products/{id}", method= RequestMethod.PUT)
 	public ResponseEntity<String> updateProduct(@PathVariable("id") int product_id, @RequestBody Product prd) throws Exception{
 		prd.setProductId(product_id);
-		System.out.println("updateProduct: "+prd.getProductName());
 		productservice.updateProduct(prd);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/products/{id}", method= RequestMethod.DELETE)
 	public ResponseEntity<Product> deleteProduct(@PathVariable("id") int product_id) throws Exception{
-		System.out.println("deleteProduct: "+product_id);
 		productservice.deleteProduct(product_id);
 		return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
 	}

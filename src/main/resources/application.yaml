@@ -3,11 +3,13 @@ server:
 spring: 
   datasource: 
     url: jdbc:postgresql://localhost:5432/postgres
-  jpa:
+    jpa:
     hibernate.ddl-auto: create-drop
+    auto-commit: false
   data:
     mongodb:
       host: localhost
       port: 27017
       database: myRetailProduct
       repositories.enabled: true
+    
