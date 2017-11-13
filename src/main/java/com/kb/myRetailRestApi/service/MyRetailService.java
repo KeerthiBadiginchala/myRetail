@@ -25,7 +25,6 @@ public class MyRetailService {
 		System.out.println("getProductById, prd_id:"+prd_id);
 		System.out.print("all:"+myretailRepository.findAll());
 		Price price = myretailRepository.findByProductId(prd_id);
-		System.out.println("price:"+price.toString());
 //		Price price = new Price();
 //		price.setCurrency_code("USD");
 //		price.setPrice_value(new Float(199.99));
@@ -35,11 +34,23 @@ public class MyRetailService {
 		return price; 
 	}
 	
-public Price addPrice(Price price) throws SQLException{
+	public Price addPrice(Price price) throws SQLException{
 		
 		System.out.println("MyRetail Service: addPrice:"+price.getProductId()+".."+ price.getPriceValue()+".."+ price.getCurrencyCode());
 		Price priceObj = myretailRepository.save(price);
 		return priceObj;
 		
 	}
+	
+	public void updatePrice(Price price){
+		myretailRepository.save(price);
+		
+	}
+	
+	public void deletePrice(int prd_id){
+		
+		myretailRepository.deleteByProductId(prd_id);
+		
+	}
+	
 }

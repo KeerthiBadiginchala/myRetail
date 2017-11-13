@@ -69,7 +69,6 @@ public class MyRetailRestApiAppController {
 				".."+request.getPathInfo()+".."+request.getRemoteAddr());
 		//Way to get context path instead of hard coding
 		Product product = template.getForObject("http://localhost:8081/myretail/productdetails/products/"+prd_Id, Product.class);
-		System.out.println("prdName: "+product.getProductName());
 		Price price = myretailService.getProductById(prd_Id);
 		product.setPrice(price);
 		return new ResponseEntity<Product>(product, HttpStatus.OK);
@@ -93,20 +92,25 @@ public class MyRetailRestApiAppController {
 		return new ResponseEntity<Product>(product,HttpStatus.CREATED);
 	}
 
-//	@RequestMapping(value = "/products/{id}", method= RequestMethod.PUT)
-//	public ResponseEntity<Product> updateProduct(@PathVariable("id") int product_id, @RequestBody Product prd) throws Exception{
-//		prd.setProduct_id(product_id);
-//		System.out.println("updateProduct: "+prd.toString());
-//		Product product = productservice.updateProduct(prd);
-//		return new ResponseEntity<Product>(product,HttpStatus.OK);
-//	}
-//
-//	@RequestMapping(value = "/products/{id}", method= RequestMethod.DELETE)
-//	public ResponseEntity<Product> deleteProduct(@PathVariable("id") int product_id) throws Exception{
-//		System.out.println("deleteProduct: "+product_id);
-//		productservice.deleteProduct(product_id);
-//		return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
-//	}
+	@RequestMapping(value = "/products/{id}", method= RequestMethod.PUT)
+	public ResponseEntity<String> updateProduct(@PathVariable("id") int product_id, @RequestBody Product prd) throws Exception{
+		prd.setProductId(product_id);
+		System.out.println("updateProduct: "+prd.toString());
+		
+		template.put("http://localhost:8081/myretail/productdetails/products/"+product_id, prd);
+		Price price = prd.getPrice();
+		price.setProductId(prd.getProductId());	
+		myretailService.updatePrice(price);
+		return new ResponseEntity<String>(HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/products/{id}", method= RequestMethod.DELETE)
+	public ResponseEntity<Product> deleteProduct(@PathVariable("id") int product_id) throws Exception{
+		System.out.println("deleteProduct: "+product_id);
+		template.delete("http://localhost:8081/myretail/productdetails/products/"+product_id);
+		myretailService.deletePrice(product_id);
+		return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
+	}
 	
 	
 }

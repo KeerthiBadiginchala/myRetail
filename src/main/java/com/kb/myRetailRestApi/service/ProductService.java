@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 
+
 import com.kb.myRetailRestApi.model.Price;
 //import com.kb.myRetailRestApi.exception.ResourceNotFoundException;
 import com.kb.myRetailRestApi.model.Product;
@@ -43,6 +44,16 @@ public class ProductService {
 		}
 		return prodObj;
 		
+	}
+	
+	public void updateProduct(Product prd) throws SQLException{
+		productrepository.updateProductName(prd);
+	}
+	
+	
+	public int deleteProduct(int prd_id) throws SQLException{
+		int status = productrepository.deleteProduct(prd_id);
+		return status;
 	}
 
 }

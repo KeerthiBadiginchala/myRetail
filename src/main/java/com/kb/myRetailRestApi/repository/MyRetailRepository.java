@@ -7,4 +7,5 @@ import com.kb.myRetailRestApi.model.Price;
 
 public interface MyRetailRepository extends MongoRepository<Price, Integer> {
 	Price findByProductId(int prd_id);
+	int deleteByProductId(int prd_id);
 }
