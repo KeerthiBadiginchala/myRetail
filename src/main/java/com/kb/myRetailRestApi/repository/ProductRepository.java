@@ -14,11 +14,11 @@ import com.kb.myRetailRestApi.model.Product;
 @Mapper
 public interface ProductRepository {
 
-	@Select("select product_id as productId, product_name as productName from Product where product_id = #{product_id}")
+	@Select("select product_id as productId, product_name as productName from public.Product where product_id=#{product_id}")
 	Product getProductByID(int product_id);
 	
 	@Select("select product_id as productId, product_name as productName from Product")
-	List<Product> getAllProducts();
+	List<Product> getAllProductNames();
 	
 	@Insert("INSERT INTO public.PRODUCT (product_name) values(#{productName})")
 	@SelectKey(keyProperty="productId",
@@ -29,5 +29,5 @@ public interface ProductRepository {
 	int updateProductName(Product prd);
 	
 	@Delete("Delete from public.PRODUCT where product_id=#{product_id}")
-	int deleteProduct(int product_id);
+	int deleteProductName(int product_id);
 }

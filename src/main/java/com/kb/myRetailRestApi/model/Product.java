@@ -1,21 +1,22 @@
 package com.kb.myRetailRestApi.model;
 
-import java.sql.Date;
-
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.xml.bind.annotation.XmlTransient;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+@Document(collection="PRODUCT")
 public class Product {
 	
+	@Field("product_id")
 	private int productId;
 	
+	@Field("product_name")
 	@NotNull(message="Product Name can not be null")
 	private String productName;
 	private Price price; 
 	
-	Product(){
+	public Product(){
 		
 	}
 	
@@ -51,7 +52,7 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [product_id=" + productId + ", product_name="
-				+ productName + ", price:[ current_price:"+price.getPriceValue()+", currency_code:"+price.getCurrencyCode()+"]]";
+				+ productName + ", price:"+price+"]";
 	}
 	
 

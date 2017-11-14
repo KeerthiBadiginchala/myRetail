@@ -1,5 +1,14 @@
 package com.kb.myRetailRestApi.model;
 
+import java.math.BigDecimal;
+
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -9,10 +18,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Price {
 	@JsonIgnore
 	@Field("product_id")
+	@NotNull(message="Product Name can not be null")
 	private int productId;
+	
 	@Field("price_value")
-	private float priceValue;
+	@DecimalMax(value = "99999.999", message = "The decimal value can not be more than 99999.999")
+	@DecimalMin(value = "1.00", message = "The priceValue value can not be less than 1.00")
+	//@Pattern(regexp = "{0-9}", message = "priceValue should be of decimal only")
+	private BigDecimal priceValue;
+	
 	@Field("currency_code")
+	//@Pattern(regexp = "^{0-9}", message = "currencyCode should be of string only")
+	@Length(max = 3, message = "The currencyCode should be of 3 characters")
 	private String currencyCode;
 	
 	
@@ -31,12 +48,12 @@ public class Price {
 	}
 
 
-	public float getPriceValue() {
+	public BigDecimal getPriceValue() {
 		return priceValue;
 	}
 
 
-	public void setPriceValue(float priceValue) {
+	public void setPriceValue(BigDecimal priceValue) {
 		this.priceValue = priceValue;
 	}
 

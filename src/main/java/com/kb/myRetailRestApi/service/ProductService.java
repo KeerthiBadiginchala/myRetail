@@ -21,17 +21,27 @@ public class ProductService {
 	@Autowired
 	private ProductRepository productrepository;
 	
-	public List<Product> getAllProducts(){
-		List<Product> prdList= productrepository.getAllProducts();
+	public List<Product> getAllProductNames(){
+		List<Product> prdList= productrepository.getAllProductNames();
 		return prdList;
 	}
 	
 	public Product getProductName(int prd_id){
-		Product prd = productrepository.getProductByID(prd_id);
+		System.out.println("calling rep mthd,"+prd_id);
+		Product prd=null;
+		try{
+			prd = productrepository.getProductByID(prd_id);
+			//System.out.println(prd+"<<<<");
+		}catch(Exception ex){
+			System.out.println("calling rep mthd,exception block"+prd);
+			ex.printStackTrace();
+		}
+		//System.out.println("after rep mthd,"+prd);
 		return prd; 
 	}
 	
 	public Product addProduct(Product product) throws SQLException{
+		
 		int status = productrepository.addProduct(product);
 		Product prodObj = null;
 		
@@ -48,7 +58,7 @@ public class ProductService {
 	
 	
 	public int deleteProduct(int prd_id) throws SQLException{
-		int status = productrepository.deleteProduct(prd_id);
+		int status = productrepository.deleteProductName(prd_id);
 		return status;
 	}
 

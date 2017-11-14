@@ -4,8 +4,10 @@ spring:
   datasource: 
     url: jdbc:postgresql://localhost:5432/postgres
     jpa:
-    hibernate.ddl-auto: create-drop
-    auto-commit: false
+    hibernate:
+      ddl-auto: create-drop
+      connection.autocommit: false
+    tomcat.default-auto-commit: false
   data:
     mongodb:
       host: localhost
