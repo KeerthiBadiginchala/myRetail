@@ -9,46 +9,38 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+
+/*
+ * Exception Handler to create user friendly messages when an exception occurs 
+ */
 @ControllerAdvice
 public class ExceptionController {
 	
 	@ExceptionHandler(NullPointerException.class)
 	public ResponseEntity<ExceptionEntity> handleException(NullPointerException ex){
-		
-		ExceptionEntity entity = new ExceptionEntity();
-		entity.setErrorMessage(ex.getMessage());
-		
-		return new ResponseEntity<ExceptionEntity>(entity,HttpStatus.NO_CONTENT);
+		return new ResponseEntity<ExceptionEntity>(new ExceptionEntity(HttpStatus.NO_CONTENT,ex),HttpStatus.NO_CONTENT);
 	}
 	
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ExceptionEntity> resourceNotFound(ResourceNotFoundException ex){
 		
-		ExceptionEntity entity = new ExceptionEntity();
-		entity.setErrorMessage("Product Details not found");
-		
-		return new ResponseEntity<ExceptionEntity>(entity, HttpStatus.NOT_FOUND);
+		String message = "Product Details not found";
+		return new ResponseEntity<ExceptionEntity>(new ExceptionEntity(HttpStatus.NOT_FOUND,message,ex), HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public ResponseEntity<ExceptionEntity> resourceNotFound(MethodArgumentNotValidException ex){
 		BindingResult errors = ex.getBindingResult();
 		
-		ExceptionEntity entity = new ExceptionEntity();
+		ExceptionEntity entity = new ExceptionEntity(HttpStatus.BAD_REQUEST);
 		entity.setErrorMessage("Please crosscheck Methods Arguments");
 		entity.setExceptionList(errors.getAllErrors());
-		
 		return new ResponseEntity<ExceptionEntity>(entity, HttpStatus.BAD_REQUEST);
 	}
 	
 	@ExceptionHandler(SQLException.class)
 	public ResponseEntity<ExceptionEntity> dbError(SQLException ex){
-		
-		ExceptionEntity entity = new ExceptionEntity();
-		entity.setErrorMessage(ex.getMessage());
-		entity.setErrorCode(ex.getErrorCode());
-		
-		return new ResponseEntity<ExceptionEntity>(entity, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<ExceptionEntity>(new ExceptionEntity(HttpStatus.BAD_REQUEST,ex), HttpStatus.BAD_REQUEST);
 	}
 
 }

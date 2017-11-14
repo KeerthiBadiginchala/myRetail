@@ -26,7 +26,22 @@ import com.kb.myRetailRestApi.service.MyRetailService;
 import com.kb.myRetailRestApi.service.RestfulTemplateClient;
 import com.kb.myRetailRestApi.exception.ResourceNotFoundException;
 
-
+/*
+ * This class acts as a main controller to make Rest calls to retrieve/add/edit all Product Details:
+	 * (1) Consumes the Rest Services to retrieve/add/edit Product Name(s), which is an internal resource hosted by the 
+	 *     same application using RestfulTemplateClient
+	 * (2) Retrieves the Price details stored in NOSQL DB
+	 * (3) Integrates the both results and sends the consolidated Product object.     
+	 * Example response: {
+	    					"productId": 1,
+	    					"productName": "ABC XYZ",
+	    					"price": {
+	        					"priceValue": 199.99,
+	        					"currencyCode": "USD"
+	    					}
+						 }
+ * 
+ */
 @RestController
 @RequestMapping("/myretail")
 public class MyRetailRestApiAppController {
@@ -37,7 +52,8 @@ public class MyRetailRestApiAppController {
 
 	@Autowired
 	private RestfulTemplateClient template;
-
+	
+	
 	@RequestMapping("/products")
 	public ResponseEntity<List<Product>> getAllProducts() throws Exception{
 		List<Product> prdNameList = template.getAllProductsNames();
@@ -76,11 +92,9 @@ public class MyRetailRestApiAppController {
 
 	@RequestMapping("/products/{id}")
 	public ResponseEntity<Product> getProductById(@PathVariable("id") int prd_Id) throws Exception{
-		System.out.println("getProductById().."+prd_Id);
 		Product product = template.getProductNameById(prd_Id);
-		System.out.println("getProductById().."+product);
 		if(product == null) {
-			throw new ResourceNotFoundException("No Product found for id"+prd_Id);
+			throw new ResourceNotFoundException("No Product found for id: "+prd_Id);
 		}
 		Price price = myretailService.getPriceByProductId(prd_Id);
 		product.setPrice(price);
@@ -90,13 +104,7 @@ public class MyRetailRestApiAppController {
 	@Transactional
 	@RequestMapping(value = "/products", method= RequestMethod.POST)
 	public ResponseEntity<Product> addProduct(@Valid @RequestBody Product prd) throws Exception{
-		System.out.println("addProduct: "+prd);
-		if(prd == null){
-			System.out.println("prd is null block");
-			return new ResponseEntity<Product>(new Product(),HttpStatus.BAD_REQUEST);
-		}
 		Product product = template.insertProduct(prd);
-		
 		
 		if(product == null) {
 			throw new SQLException("Not able to add the Product");
@@ -113,10 +121,6 @@ public class MyRetailRestApiAppController {
 
 	@RequestMapping(value = "/products/{id}", method= RequestMethod.PUT)
 	public ResponseEntity<String> updateProduct(@PathVariable("id") int product_id, @Valid @RequestBody Product prd) throws Exception{
-		if(prd == null){
-			System.out.println("updateProduct, prd is null block");
-			return new ResponseEntity<String>("Request Body is empty",HttpStatus.BAD_REQUEST);
-		}
 		prd.setProductId(product_id);
 		template.updateProduct(product_id, prd);
 		Price price = prd.getPrice();

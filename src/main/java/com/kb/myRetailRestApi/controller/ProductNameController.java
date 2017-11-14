@@ -17,21 +17,26 @@ import com.kb.myRetailRestApi.model.Product;
 import com.kb.myRetailRestApi.service.ProductService;
 
 
+/*
+ * This class is invoked by RestfulTemplateClient to Consumes the Rest Services to retrieve/add/edit Product Name(s)
+	 * Example response: 
+	    					{
+							    "productId": 1,
+							    "productName": "abcd xyz",
+							    "price": null
+							}
+						 
+ * 
+ */
 @RestController
-@RequestMapping("/myretail/productName")
+@RequestMapping("/myretail/productNames")
 public class ProductNameController {
 	@Autowired
 	public ProductService productservice;
 	
 	@RequestMapping("/products/{id}")
 	public ResponseEntity<Product> getProductNameById(@PathVariable("id") int prd_Id){
-		System.out.println("getProductNameById:"+prd_Id);
 		Product prd = productservice.getProductName(prd_Id);
-//		try{
-//			System.out.println("after getProductNameById:"+prd);
-//		}catch(Exception e){
-//			System.out.println(e);
-//		}
 		
 		return new ResponseEntity<Product>(prd, HttpStatus.OK);
 	}

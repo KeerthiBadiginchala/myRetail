@@ -1,23 +1,63 @@
 package com.kb.myRetailRestApi.exception;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+/*
+ * Exception model class to be used to ExceptionController to process the error messages whenn exception occurs
+ * 
+ */
 public class ExceptionEntity {
-	
-	private int errorCode;
+
+	private HttpStatus status;
 	private String errorMessage;
 	private List<ObjectError> exceptionList;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
+	private LocalDateTime timestamp;
+	
+	private String debugMessage;
+
 	ExceptionEntity(){
-		
+		timestamp = LocalDateTime.now();
 	}
-	public int getErrorCode() {
-		return errorCode;
+
+	ExceptionEntity(HttpStatus status) {
+		this();
+		this.status = status;
 	}
-	public void setErrorCode(int errorCode) {
-		this.errorCode = errorCode;
+	ExceptionEntity(HttpStatus status, Throwable ex) {
+		this();
+		this.status = status;
+		this.errorMessage = ex.getMessage();
+		this.debugMessage = ex.getLocalizedMessage(); 
 	}
+	ExceptionEntity(HttpStatus status, String message, Throwable ex) {
+		this();
+		this.status = status;
+		this.errorMessage = ex.getMessage();
+		this.debugMessage = ex.getLocalizedMessage(); 
+	}
+
+	public HttpStatus getStatus() {
+		return status;
+	}
+	public void setStatus(HttpStatus status) {
+		this.status = status;
+	}
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(LocalDateTime timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	public String getErrorMessage() {
 		return errorMessage;
 	}
@@ -30,6 +70,6 @@ public class ExceptionEntity {
 	public void setExceptionList(List<ObjectError> exceptionList) {
 		this.exceptionList = exceptionList;
 	}
-	
-	
+
+
 }

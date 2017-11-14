@@ -15,31 +15,42 @@ import com.kb.myRetailRestApi.model.Price;
 import com.kb.myRetailRestApi.model.Product;
 import com.kb.myRetailRestApi.repository.ProductRepository;
 
+
+/*
+ * Service Layer to invoke DB related calls through ProductRepository which acts an as Mapper interface for myBatis
+ * to connect to PostgresSQL DB to maintain ProductName details. 
+ *
+ */
+
 @Service("productservice")
 public class ProductService {
 	
 	@Autowired
 	private ProductRepository productrepository;
 	
+	/*
+	 * @Purpose: Method to fetch all ProductNames from PostgresSQL DB
+	 */
 	public List<Product> getAllProductNames(){
 		List<Product> prdList= productrepository.getAllProductNames();
 		return prdList;
 	}
 	
+	/*
+	 * @Purpose: Method to fetch ProductName for the given Product Id from PostgresSQL DB
+	 * @Param: prd_id
+	 */
 	public Product getProductName(int prd_id){
-		System.out.println("calling rep mthd,"+prd_id);
-		Product prd=null;
-		try{
-			prd = productrepository.getProductByID(prd_id);
-			//System.out.println(prd+"<<<<");
-		}catch(Exception ex){
-			System.out.println("calling rep mthd,exception block"+prd);
-			ex.printStackTrace();
-		}
-		//System.out.println("after rep mthd,"+prd);
+		Product prd=productrepository.getProductByID(prd_id);
 		return prd; 
 	}
 	
+
+	/*
+	 * @Purpose: Method to add Product details to PostgresSQL DB, for the given Product Object
+	 * @Param: Product object 
+	 * @Throws: SQLException
+	 */
 	public Product addProduct(Product product) throws SQLException{
 		
 		int status = productrepository.addProduct(product);
@@ -52,11 +63,20 @@ public class ProductService {
 		
 	}
 	
+	/*
+	 * @Purpose: Method to edit Product details for the given Product Id
+	 * @Param: Product object 
+	 * @Throws: SQLException
+	 */
 	public void updateProduct(Product prd) throws SQLException{
 		productrepository.updateProductName(prd);
 	}
 	
-	
+	/*
+	 * @Purpose: Method to delete Product details for the given Product Id
+	 * @Param: prd_id
+	 * @Throws: SQLException
+	 */
 	public int deleteProduct(int prd_id) throws SQLException{
 		int status = productrepository.deleteProductName(prd_id);
 		return status;

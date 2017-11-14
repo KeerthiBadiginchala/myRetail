@@ -11,6 +11,12 @@ import org.apache.ibatis.annotations.Update;
 
 import com.kb.myRetailRestApi.model.Product;
 
+/*
+ * ProductRepository to represent PostgresSQL DB using Mybais Mappers to perform CRUD operation when needed.
+ * This class is being used to maintain Product related details:
+ *  {"productId": 1, "productName": "ABC XYZ"} 
+ */
+
 @Mapper
 public interface ProductRepository {
 
