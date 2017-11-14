@@ -18,18 +18,18 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Price {
 	@JsonIgnore
 	@Field("product_id")
-	@NotNull(message="Product Name can not be null")
 	private int productId;
 	
 	@Field("price_value")
-	@DecimalMax(value = "99999.999", message = "The decimal value can not be more than 99999.999")
-	@DecimalMin(value = "1.00", message = "The priceValue value can not be less than 1.00")
+	//@DecimalMax(value = "99999.999", message = "The decimal value can not be more than 99999.999")
+	//@DecimalMin(value = "1.00", message = "The priceValue value can not be less than 1.00")
 	//@Pattern(regexp = "{0-9}", message = "priceValue should be of decimal only")
 	private BigDecimal priceValue;
 	
 	@Field("currency_code")
 	//@Pattern(regexp = "^{0-9}", message = "currencyCode should be of string only")
-	@Length(max = 3, message = "The currencyCode should be of 3 characters")
+	@Pattern(regexp="^(0|[1-9][0-9]*)$")
+	//@Length(max = 3, message = "The currencyCode should be of 3 characters")
 	private String currencyCode;
 	
 	

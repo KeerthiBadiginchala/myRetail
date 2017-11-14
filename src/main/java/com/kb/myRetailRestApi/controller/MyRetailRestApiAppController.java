@@ -57,25 +57,11 @@ public class MyRetailRestApiAppController {
 	@RequestMapping("/products")
 	public ResponseEntity<List<Product>> getAllProducts() throws Exception{
 		List<Product> prdNameList = template.getAllProductsNames();
-		List<Price> priceList = myretailService.getAllPriceDetails();
 		List<Product> prdList = new ArrayList<>();
-
-		//		List<Product> result = prdNameList.stream()
-		//			    .flatMap(one -> 
-		//			    			priceList.stream().filter(two -> one.getProductId() == two.getProductId())
-		//			        .map(two -> one.setPrice(two)))
-		//			    .collect(Collectors.toList());
-
-		//		prdNameList.stream().forEach(prdNameObj -> 
-		//		{
-		//			priceList.stream().filter(priceNameObj -> prdNameObj)
-		//			
-		//		});
 		
 		if(prdNameList==null)
 			throw new ResourceNotFoundException("No Products found");
 
-		//Fetching Price object on each Product Object, it might need DB to hit for every Product Object
 		prdNameList.forEach(e -> {
 			Price price = null;
 			try {

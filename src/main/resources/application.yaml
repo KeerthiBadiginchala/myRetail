@@ -14,4 +14,3 @@ spring:
       port: 27017
       database: myRetailProduct
       repositories.enabled: true
-    

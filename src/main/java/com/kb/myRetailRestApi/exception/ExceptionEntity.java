@@ -25,6 +25,7 @@ public class ExceptionEntity {
 
 	ExceptionEntity(){
 		timestamp = LocalDateTime.now();
+		System.out.println("timestamp:"+timestamp);
 	}
 
 	ExceptionEntity(HttpStatus status) {
@@ -42,6 +43,7 @@ public class ExceptionEntity {
 		this.status = status;
 		this.errorMessage = ex.getMessage();
 		this.debugMessage = ex.getLocalizedMessage(); 
+		System.out.println("timestamp:"+timestamp);
 	}
 
 	public HttpStatus getStatus() {
