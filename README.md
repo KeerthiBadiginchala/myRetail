@@ -41,13 +41,13 @@ The following actions can be performed:
 * Example response:
 
 ``` json
-{  
-  "productId": 1,  
-  "productName": "The Big Lebowski (Blu-ray)(Widescreen)",  
-  "price": {  
-    "priceValue": 199,  
-    "currencyCode": "USD"  
-  }  
+{
+    "id": 15,
+    "name": "The Big Lebowski (Blu-ray)(Widescreen)",
+    "current_price": {
+        "value": 399.99,
+        "currency_code": "CAD"
+    }
 }
 ```
   
