@@ -33,8 +33,7 @@ End points:
 - PUT: /products/{id} updates the product with new details  
 - DELETE: /products/{id} deletes the product  
 
-For more details please refer before Swagger API:
-
+For more details please refer to [myretail-sepcification](./api-spec/myretail-swagger.yaml)  
 
 The following actions can be performed:  
 * Responds to an HTTP GET request at "/products/" to retrive all product details and "/products/{id}" to retrieve specific product details and delivers the product data as JSON, where {id} will be a number.  
