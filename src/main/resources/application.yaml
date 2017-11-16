@@ -3,6 +3,7 @@ server:
 spring: 
   datasource: 
     url: jdbc:postgresql://localhost:5432/myretail
+    
   data:
     mongodb:
       host: localhost

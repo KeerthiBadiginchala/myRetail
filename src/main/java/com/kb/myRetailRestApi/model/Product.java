@@ -2,20 +2,26 @@ package com.kb.myRetailRestApi.model;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document(collection="PRODUCT")
 public class Product {
 	
 	@Field("product_id")
+	@JsonProperty("id")
 	private int productId;
 	
 	@Field("product_name")
+	@JsonProperty("name")
 	@NotNull(message="Product Name can not be null")
 	private String productName;
 	
 	@Valid
+	@JsonProperty("current_price")
 	private Price price; 
 	
 	public Product(){

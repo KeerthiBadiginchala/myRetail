@@ -11,6 +11,7 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Document(collection="PRODUCT_PRICE")
 public class Price {
@@ -24,11 +25,13 @@ public class Price {
 	@DecimalMax(value = "99999.999", message = "The priceValue can not be more than 99999.999")
 	@DecimalMin(value = "1.00", message = "The priceValue can not be less than 1.00")
 	@Field("price_value")
+	@JsonProperty("value")
 	private double priceValue;
 	
 	@Pattern(regexp = "^[^0-9]+$", message = "The currencyCode should be of characters only, no digits are allowed")
 	@Length( max = 3, message = "The currencyCode should be of 3 characters")
 	@Field("currency_code")
+	@JsonProperty("currency_code")
 	private String currencyCode;
 	
 	
