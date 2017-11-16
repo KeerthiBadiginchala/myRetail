@@ -33,12 +33,12 @@ import com.kb.myRetailRestApi.exception.ResourceNotFoundException;
 	 * (2) Retrieves the Price details stored in NOSQL DB
 	 * (3) Integrates the both results and sends the consolidated Product object.     
 	 * Example response: {
-	    					"productId": 1,
-	    					"productName": "The Big Lebowski (Blu-ray)(Widescreen)",
-	    					"price": {
-	        					"priceValue": 199.99,
-	        					"currencyCode": "USD"
-	    					}
+						    "id": 1,
+						    "name": "The Big Lebowski (Blu-ray)(Widescreen)",
+						    "current_price": {
+						        "value": 199,
+						        "currency_code": "USD"
+						    }
 						 }
  * 
  */

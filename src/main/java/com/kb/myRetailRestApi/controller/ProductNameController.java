@@ -20,9 +20,9 @@ import com.kb.myRetailRestApi.service.ProductService;
  * This class is invoked by RestfulTemplateClient to Consumes the Rest Services to retrieve/add/edit Product Name(s)
 	 * Example response: 
 	    					{
-							    "productId": 1,
-							    "productName": "The Big Lebowski (Blu-ray)(Widescreen)",
-							    "price": null
+							     "id": 1,
+    							 "name": "The Big Lebowski (Blu-ray)(Widescreen)",
+							     "current_price": null
 							}
 						 
  * 

@@ -14,14 +14,17 @@ import com.kb.myRetailRestApi.model.Product;
 /*
  * ProductRepository to represent PostgresSQL DB using Mybais Mappers to perform CRUD operation when needed.
  * This class is being used to maintain Product related details:
- *  {"productId": 1, "productName": "The Big Lebowski (Blu-ray)(Widescreen)"} 
+ *  {
+    "id": 1,
+    "name": "The Big Lebowski (Blu-ray)(Widescreen)"
+    } 
  */
 
 @Mapper
 public interface ProductRepository {
 
-	@Select("select product_id as productId, product_name as productName from public.Product where product_id=#{product_id}")
-	Product getProductByID(int product_id);
+	@Select("select product_id as productId, product_name as productName from public.Product where product_id=#{productId}")
+	Product getProductByID(int productId);
 	
 	@Select("select product_id as productId, product_name as productName from Product")
 	List<Product> getAllProductNames();

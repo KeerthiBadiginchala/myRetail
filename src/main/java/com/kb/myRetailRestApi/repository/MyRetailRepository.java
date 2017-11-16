@@ -7,7 +7,10 @@ import com.kb.myRetailRestApi.model.Price;
 /*
  * MongoRepository to represent NOSQL/Mongo DB and perform CRUD operation when needed.
  * This class is being used to maintain Price related details:
- *  "price": {"priceValue": 199.99, "currencyCode": "USD"} 
+ *  "current_price": {
+        "value": 199,
+        "currency_code": "USD"
+    }
  */
 public interface MyRetailRepository extends MongoRepository<Price, Integer> {
 	Price findByProductId(int productId);

@@ -16,7 +16,10 @@ import com.kb.myRetailRestApi.repository.MyRetailRepository;
 /*
  * Service Layer to invoke DB related calls through MyRetailRepository which is an implementation of MongoRepository 
  * to maintain Price related details:
- * "price": {"priceValue": 199.99, "currencyCode": "USD"} 
+ *  "current_price": {
+        "value": 199,
+        "currency_code": "USD"
+    }
  *
  */
 @Service("myretailservice")

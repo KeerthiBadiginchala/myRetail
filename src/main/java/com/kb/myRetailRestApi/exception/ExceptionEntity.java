@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 /*
- * Exception model class to be used to ExceptionController to process the error messages whenn exception occurs
+ * Exception model class to be used to ExceptionController to process the error messages when exception occurs
  * 
  */
 public class ExceptionEntity {
