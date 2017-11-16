@@ -10,6 +10,6 @@ import com.kb.myRetailRestApi.model.Price;
  *  "price": {"priceValue": 199.99, "currencyCode": "USD"} 
  */
 public interface MyRetailRepository extends MongoRepository<Price, Integer> {
-	Price findByProductId(int prd_id);
-	int deleteByProductId(int prd_id);
+	Price findByProductId(int productId);
+	int deleteByProductId(int productId);
 }

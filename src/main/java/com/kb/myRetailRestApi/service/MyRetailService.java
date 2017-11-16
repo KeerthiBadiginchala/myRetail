@@ -39,11 +39,11 @@ public class MyRetailService {
 	
 	/*
 	 * @Purpose: Method fetches Price details for the given Product Id
-	 * @Param: prd_id
+	 * @Param: productId
 	 * @Throws: SQLException
 	 */
-	public Price getPriceByProductId(int prd_id) throws SQLException{
-		Price price = myretailRepository.findByProductId(prd_id);
+	public Price getPriceByProductId(int productId) throws SQLException{
+		Price price = myretailRepository.findByProductId(productId);
 		return price; 
 	}
 	
@@ -73,11 +73,11 @@ public class MyRetailService {
 	
 	/*
 	 * @Purpose: Method to delete Price details for the given Price Id
-	 * @Param: prd_id
+	 * @Param: productId
 	 * @Throws: SQLException
 	 */
-	public void deletePrice(int prd_id) throws SQLException{
-		 myretailRepository.deleteByProductId(prd_id);
+	public void deletePrice(int productId) throws SQLException{
+		 myretailRepository.deleteByProductId(productId);
 	}
 	
 }

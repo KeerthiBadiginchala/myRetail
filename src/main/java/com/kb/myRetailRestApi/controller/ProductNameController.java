@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.SQLException;
 import java.util.List;
 
-import com.kb.myRetailRestApi.exception.ResourceNotFoundException;
 import com.kb.myRetailRestApi.model.Product;
 import com.kb.myRetailRestApi.service.ProductService;
 
@@ -22,7 +21,7 @@ import com.kb.myRetailRestApi.service.ProductService;
 	 * Example response: 
 	    					{
 							    "productId": 1,
-							    "productName": "abcd xyz",
+							    "productName": "The Big Lebowski (Blu-ray)(Widescreen)",
 							    "price": null
 							}
 						 
@@ -35,39 +34,39 @@ public class ProductNameController {
 	public ProductService productservice;
 	
 	@RequestMapping("/products/{id}")
-	public ResponseEntity<Product> getProductNameById(@PathVariable("id") int prd_Id){
-		Product prd = productservice.getProductName(prd_Id);
+	public ResponseEntity<Product> getProductNameById(@PathVariable("id") int productId){
+		Product product = productservice.getProductName(productId);
 		
-		return new ResponseEntity<Product>(prd, HttpStatus.OK);
+		return new ResponseEntity<Product>(product, HttpStatus.OK);
 	}
 	
 	@RequestMapping("/products")
 	public ResponseEntity<List<Product>> getAllProducts(){
-		List<Product> prdList = productservice.getAllProductNames();
-		return new ResponseEntity<List<Product>>(prdList, HttpStatus.OK);
+		List<Product> productList = productservice.getAllProductNames();
+		return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
 	}
 
     @RequestMapping(value = "/products", method=RequestMethod.POST)
-    public ResponseEntity<Product> addProduct(@RequestBody Product prd) throws SQLException{
-    	Product prdObj=null;
+    public ResponseEntity<Product> addProduct(@RequestBody Product product) throws SQLException{
+    	Product productObj=null;
 		try {
-			prdObj = productservice.addProduct(prd);
+			productObj = productservice.addProduct(product);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-    	return new ResponseEntity<Product>(prdObj, HttpStatus.OK);
+    	return new ResponseEntity<Product>(productObj, HttpStatus.CREATED);
     }
     
     @RequestMapping(value = "/products/{id}", method= RequestMethod.PUT)
-	public ResponseEntity<String> updateProduct(@PathVariable("id") int product_id, @RequestBody Product prd) throws SQLException{
-		prd.setProductId(product_id);
-		productservice.updateProduct(prd);
+	public ResponseEntity<String> updateProduct(@PathVariable("id") int productId, @RequestBody Product product) throws SQLException{
+		product.setProductId(productId);
+		productservice.updateProduct(product);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/products/{id}", method= RequestMethod.DELETE)
-	public ResponseEntity<Product> deleteProduct(@PathVariable("id") int product_id) throws SQLException{
-		productservice.deleteProduct(product_id);
+	public ResponseEntity<Product> deleteProduct(@PathVariable("id") int productId) throws SQLException{
+		productservice.deleteProduct(productId);
 		return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
 	}
 

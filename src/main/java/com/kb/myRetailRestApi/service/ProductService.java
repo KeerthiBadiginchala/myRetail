@@ -6,12 +6,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-
-
-
-import com.kb.myRetailRestApi.model.Price;
-//import com.kb.myRetailRestApi.exception.ResourceNotFoundException;
 import com.kb.myRetailRestApi.model.Product;
 import com.kb.myRetailRestApi.repository.ProductRepository;
 
@@ -38,11 +32,11 @@ public class ProductService {
 	
 	/*
 	 * @Purpose: Method to fetch ProductName for the given Product Id from PostgresSQL DB
-	 * @Param: prd_id
+	 * @Param: productId
 	 */
-	public Product getProductName(int prd_id){
-		Product prd=productrepository.getProductByID(prd_id);
-		return prd; 
+	public Product getProductName(int productId){
+		Product product=productrepository.getProductByID(productId);
+		return product; 
 	}
 	
 
@@ -65,21 +59,20 @@ public class ProductService {
 	
 	/*
 	 * @Purpose: Method to edit Product details for the given Product Id
-	 * @Param: Product object 
+	 * @Param: productId, Product object 
 	 * @Throws: SQLException
 	 */
-	public void updateProduct(Product prd) throws SQLException{
-		productrepository.updateProductName(prd);
+	public void updateProduct(Product product) throws SQLException{
+		productrepository.updateProductName(product);
 	}
 	
 	/*
 	 * @Purpose: Method to delete Product details for the given Product Id
-	 * @Param: prd_id
+	 * @Param: productId
 	 * @Throws: SQLException
 	 */
-	public int deleteProduct(int prd_id) throws SQLException{
-		int status = productrepository.deleteProductName(prd_id);
-		return status;
+	public void deleteProduct(int productId) throws SQLException{
+		productrepository.deleteProductName(productId);
 	}
 
 }

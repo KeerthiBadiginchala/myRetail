@@ -34,7 +34,7 @@ import com.kb.myRetailRestApi.exception.ResourceNotFoundException;
 	 * (3) Integrates the both results and sends the consolidated Product object.     
 	 * Example response: {
 	    					"productId": 1,
-	    					"productName": "ABC XYZ",
+	    					"productName": "The Big Lebowski (Blu-ray)(Widescreen)",
 	    					"price": {
 	        					"priceValue": 199.99,
 	        					"currencyCode": "USD"
@@ -51,52 +51,49 @@ public class MyRetailRestApiAppController {
 	public MyRetailService myretailService;
 
 	@Autowired
-	private RestfulTemplateClient template;
+	private RestfulTemplateClient restTemplate;
 	
 	
 	@RequestMapping("/products")
 	public ResponseEntity<List<Product>> getAllProducts() throws Exception{
-		List<Product> prdNameList = template.getAllProductsNames();
-		List<Product> prdList = new ArrayList<>();
-		
-		if(prdNameList==null)
-			throw new ResourceNotFoundException("No Products found");
-
-		prdNameList.forEach(e -> {
-			Price price = null;
-			try {
-				price = myretailService.getPriceByProductId(e.getProductId());
-			} catch (Exception e1) {
-				e1.printStackTrace();
-			}
-			e.setPrice(price);
-			prdList.add(e);
-
-		});
-		return new ResponseEntity<List<Product>>(prdList,HttpStatus.OK);
+		List<Product> productsNameList = restTemplate.getAllProductsNames();
+		List<Product> productsList = new ArrayList<>();
+		if(productsNameList != null){
+			productsNameList.forEach(e -> {
+				Price price = null;
+				try {
+					price = myretailService.getPriceByProductId(e.getProductId());
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				e.setPrice(price);
+				productsList.add(e);
+			});
+		}
+		return new ResponseEntity<List<Product>>(productsList,HttpStatus.OK);
 	}
 
 	@RequestMapping("/products/{id}")
-	public ResponseEntity<Product> getProductById(@PathVariable("id") int prd_Id) throws Exception{
-		Product product = template.getProductNameById(prd_Id);
+	public ResponseEntity<Product> getProductById(@PathVariable("id") int productId) throws Exception{
+		Product product = restTemplate.getProductNameById(productId);
 		if(product == null) {
-			throw new ResourceNotFoundException("No Product found for id: "+prd_Id);
+			throw new ResourceNotFoundException("No Product found for id: "+productId);
 		}
-		Price price = myretailService.getPriceByProductId(prd_Id);
+		Price price = myretailService.getPriceByProductId(productId);
 		product.setPrice(price);
 		return new ResponseEntity<Product>(product, HttpStatus.OK);
 	}
 
 	@Transactional
 	@RequestMapping(value = "/products", method= RequestMethod.POST)
-	public ResponseEntity<Product> addProduct(@Valid @RequestBody Product prd) throws Exception{
-		Product product = template.insertProduct(prd);
+	public ResponseEntity<Product> addProduct(@Valid @RequestBody Product productObj) throws Exception{
+		Product product = restTemplate.insertProduct(productObj);
 		
 		if(product == null) {
 			throw new SQLException("Not able to add the Product");
 		}
 		
-		Price price = prd.getPrice();
+		Price price = productObj.getPrice();
 		price.setProductId(product.getProductId());		
 
 		myretailService.addPrice(price);
@@ -106,20 +103,20 @@ public class MyRetailRestApiAppController {
 	}
 
 	@RequestMapping(value = "/products/{id}", method= RequestMethod.PUT)
-	public ResponseEntity<String> updateProduct(@PathVariable("id") int product_id, @Valid @RequestBody Product prd) throws Exception{
-		prd.setProductId(product_id);
-		template.updateProduct(product_id, prd);
-		Price price = prd.getPrice();
-		price.setProductId(prd.getProductId());	
+	public ResponseEntity<String> updateProduct(@PathVariable("id") int productId, @Valid @RequestBody Product product) throws Exception{
+		product.setProductId(productId);
+		restTemplate.updateProduct(productId, product);
+		Price price = product.getPrice();
+		price.setProductId(product.getProductId());	
 		myretailService.updatePrice(price);
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/products/{id}", method= RequestMethod.DELETE)
-	public ResponseEntity<Product> deleteProduct(@PathVariable("id") int product_id) throws Exception{
-		template.deleteProduct(product_id);
-		myretailService.deletePrice(product_id);
-		return new ResponseEntity<Product>(HttpStatus.NO_CONTENT);
+	public ResponseEntity<String> deleteProduct(@PathVariable("id") int productId) throws Exception{
+		restTemplate.deleteProduct(productId);
+		myretailService.deletePrice(productId);
+		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 	}
 
 

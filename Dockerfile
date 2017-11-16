@@ -1,8 +1,4 @@
 FROM library/openjdk
-ADD /build/libs/myRetailRestApi.jar /opt/dockerdemo/
-CMD ["java", "-jar", "/opt/dockerdemo/myRetailRestApi.jar"]
-EXPOSE 8081
-				
-	
-
-
+ADD /build/libs/myRetailRestApi-0.0.1-SNAPSHOT.jar /opt/myretail/
+CMD ["java", "-jar", "/opt/myretail/myRetailRestApi-0.0.1-SNAPSHOT.jar"]
+EXPOSE 8082

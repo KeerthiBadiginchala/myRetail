@@ -2,12 +2,7 @@ server:
   port: 8081
 spring: 
   datasource: 
-    url: jdbc:postgresql://localhost:5432/postgres
-    jpa:
-    hibernate:
-      ddl-auto: create-drop
-      connection.autocommit: false
-    tomcat.default-auto-commit: false
+    url: jdbc:postgresql://localhost:5432/myretail
   data:
     mongodb:
       host: localhost

@@ -22,49 +22,53 @@ public class RestfulTemplateClient {
 	}
 	
 	/*
-	 * Consuming a Rest Service using HTTP GET method to retrieve all Product Names.
+	 * @Purpose: Consuming a Rest Service using HTTP GET method to retrieve all Product Names.
 	 * getForObject() : Use HTTP GET method to retrieve data.
 	 */
 	public List<Product> getAllProductsNames(){
-		Product[] prdNameArray = template.getForObject(internalResourceUri, Product[].class);
-		if(prdNameArray==null)
+		Product[] productNameArray = template.getForObject(internalResourceUri, Product[].class);
+		if(productNameArray==null)
 			return null;
-		List<Product> prdNameList = Arrays.asList(prdNameArray);
-		return prdNameList;
+		List<Product> productNameList = Arrays.asList(productNameArray);
+		return productNameList;
 	}
 	
 	/*
-	 * Consuming a Rest Service using HTTP GET method to retrieve Product Name for a given "Product Id".
+	 * @Purpose: Consuming a Rest Service using HTTP GET method to retrieve Product Name for a given "Product Id".
 	 * getForObject() : Use HTTP GET method to retrieve data.
+	 * @Params: productId
 	 */
-	public Product getProductNameById(int prd_Id){
-		Product product = template.getForObject(internalResourceUri+prd_Id, Product.class);
+	public Product getProductNameById(int productId){
+		Product product = template.getForObject(internalResourceUri+productId, Product.class);
 		return product;
 	}
 	
 	/*
-	 * Consuming a Rest Service using HTTP POST method to add Product Object.
+	 * @Purpose: Consuming a Rest Service using HTTP POST method to add Product Object.
 	 * postForObject() : Creates a news resource using HTTP POST method.
+	 * @Params: product
 	 */
-	public Product insertProduct(Product prd) throws SQLException{
-		Product product = template.postForObject(internalResourceUri, prd, Product.class);
-		return product;
+	public Product insertProduct(Product product) throws SQLException{
+		Product productObj = template.postForObject(internalResourceUri, product, Product.class);
+		return productObj;
 	}
 	
 	/*
-	 * Consuming a Rest Service using HTTP PUT method to edit the Product Object for a given "Product Id".
+	 * @Purpose:Consuming a Rest Service using HTTP PUT method to edit the Product Object for a given "Product Id".
 	 * put() : Updates the resource using HTTP PUT method.
+	 * @Params: productId, product
 	 */
-	public void updateProduct(int product_id, Product prd) throws SQLException{
-		template.put(internalResourceUri+product_id, prd);
+	public void updateProduct(int productId, Product product) throws SQLException{
+		template.put(internalResourceUri+productId, product);
 	}
 	
 	/*
-	 * Consuming a Rest Service using HTTP DELETE method to delete the Product Object for a given "Product Id".
+	 * @Purpose: Consuming a Rest Service using HTTP DELETE method to delete the Product Object for a given "Product Id".
 	 * delete() : Deletes the resource using HTTP DELETE method.
+	 * @Params: productId
 	 */
-	public void deleteProduct(int product_id) throws SQLException{
-		template.delete(internalResourceUri+product_id);
+	public void deleteProduct(int productId) throws SQLException{
+		template.delete(internalResourceUri+productId);
 	}
 
 }

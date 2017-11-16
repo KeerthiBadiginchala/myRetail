@@ -1,6 +1,8 @@
 package com.kb.myRetailRestApi.exception;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +35,18 @@ public class ExceptionController {
 		BindingResult errors = ex.getBindingResult();
 		
 		ExceptionEntity entity = new ExceptionEntity(HttpStatus.BAD_REQUEST);
-		entity.setErrorMessage("Please crosscheck Methods Arguments");
-		entity.setExceptionList(errors.getAllErrors());
+		entity.setErrorMessage("Please crosscheck Method/Request Body Arguments");
+		List<String> errorsList = new ArrayList<>();
+		
+		if(errors.hasFieldErrors()){
+			errors.getFieldErrors().forEach(fe -> {
+				String fieldError = fe.getDefaultMessage();
+				errorsList.add(fieldError);
+			});
+			
+		}
+		entity.setValidationErrors(errorsList);
+		//errors.
 		return new ResponseEntity<ExceptionEntity>(entity, HttpStatus.BAD_REQUEST);
 	}
 	

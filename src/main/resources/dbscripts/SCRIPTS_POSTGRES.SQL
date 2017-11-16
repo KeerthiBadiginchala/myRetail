@@ -17,7 +17,7 @@ CREATE TABLE PRODUCT (
 
 
 INSERT INTO PRODUCT (product_id, product_name)
-VALUES (1, 'Stroller');
+VALUES (1, 'The Big Lebowski (Blu-ray)(Widescreen)');
 
 COMMIT;
 

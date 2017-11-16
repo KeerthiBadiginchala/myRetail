@@ -14,7 +14,7 @@ import com.kb.myRetailRestApi.model.Product;
 /*
  * ProductRepository to represent PostgresSQL DB using Mybais Mappers to perform CRUD operation when needed.
  * This class is being used to maintain Product related details:
- *  {"productId": 1, "productName": "ABC XYZ"} 
+ *  {"productId": 1, "productName": "The Big Lebowski (Blu-ray)(Widescreen)"} 
  */
 
 @Mapper
@@ -32,7 +32,7 @@ public interface ProductRepository {
 	int addProduct(Product prd);
 	
 	@Update("Update public.PRODUCT set product_name=#{productName} where product_id=#{productId}")
-	int updateProductName(Product prd);
+	int updateProductName(Product product);
 	
 	@Delete("Delete from public.PRODUCT where product_id=#{product_id}")
 	int deleteProductName(int product_id);

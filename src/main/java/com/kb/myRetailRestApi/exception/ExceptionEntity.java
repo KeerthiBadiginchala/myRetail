@@ -1,10 +1,9 @@
 package com.kb.myRetailRestApi.exception;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.ObjectError;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -16,15 +15,13 @@ public class ExceptionEntity {
 
 	private HttpStatus status;
 	private String errorMessage;
-	private List<ObjectError> exceptionList;
+	private List<String> validationErrors;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
-	private LocalDateTime timestamp;
-	
-	private String debugMessage;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss", timezone = "CST")
+	private Date timestamp;
 
 	ExceptionEntity(){
-		timestamp = LocalDateTime.now();
+		timestamp = new Date();
 		System.out.println("timestamp:"+timestamp);
 	}
 
@@ -36,13 +33,11 @@ public class ExceptionEntity {
 		this();
 		this.status = status;
 		this.errorMessage = ex.getMessage();
-		this.debugMessage = ex.getLocalizedMessage(); 
 	}
 	ExceptionEntity(HttpStatus status, String message, Throwable ex) {
 		this();
 		this.status = status;
 		this.errorMessage = ex.getMessage();
-		this.debugMessage = ex.getLocalizedMessage(); 
 		System.out.println("timestamp:"+timestamp);
 	}
 
@@ -52,11 +47,11 @@ public class ExceptionEntity {
 	public void setStatus(HttpStatus status) {
 		this.status = status;
 	}
-	public LocalDateTime getTimestamp() {
+	public Date getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(LocalDateTime timestamp) {
+	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
 
@@ -66,12 +61,15 @@ public class ExceptionEntity {
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
 	}
-	public List<ObjectError> getExceptionList() {
-		return exceptionList;
+
+	public List<String> getValidationErrors() {
+		return validationErrors;
 	}
-	public void setExceptionList(List<ObjectError> exceptionList) {
-		this.exceptionList = exceptionList;
+
+	public void setValidationErrors(List<String> validationErrors) {
+		this.validationErrors = validationErrors;
 	}
+	
 
 
 }
