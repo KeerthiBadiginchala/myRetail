@@ -1,0 +1,159 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: MyRetail
+  description: API specification which provides the product details based on the id
+host: localhost:8081
+schemes:
+  - http
+basePath: /myRetail
+produces:
+  - application/json
+consumes:
+  - application/json
+x-api-definition:
+  api_name: myRetail
+paths:
+  /products:
+    post:
+      x-success_http_code: '200'
+      description: Creates a new Product and returns it
+      tags:
+        - Product - Create
+      parameters:
+        - in: body
+          name: request
+          description: request
+          required: true
+          schema:
+            $ref: '#/definitions/ProductDetails'
+      responses:
+        '201':
+          description: Successful response. Product created with new productId
+          schema: {}
+        '400':
+          description: Bad Request.
+          schema: {}
+        '500':
+          description: Internal server error
+          schema: {}
+    get:
+      x-success_http_code: '200'
+      description: Fetches all the product details
+      tags:
+        - Product - Get all
+      responses:
+        '200':
+          description: Successful response.
+          schema: {
+           $ref: '#/definitions/AllProductDetails'
+          }
+        '400':
+          description: Bad Request.
+          schema: {}
+        '500':
+          description: Internal server error
+          schema: {}
+  /products/{id}:
+    get:
+      x-success_http_code: '200'
+      description: Returns a product with details
+      tags:
+          - Product - Get one
+      parameters:
+        - 
+          name: "id"
+          in: "path"
+          description: "Product ID to fetch"
+          required: true
+          type: "integer"
+      responses:
+        '200':
+          description: Successful response.
+          schema: {
+           $ref: '#/definitions/AllProductDetails'
+          }
+        '500':
+          description: Internal server error
+          schema: {}
+    put:
+      x-success_http_code: '200'
+      description: Updates a product with details
+      tags:
+          - Product - Update
+      parameters:
+        - 
+          name: "id"
+          in: "path"
+          description: "Product ID to update"
+          required: true
+          type: "integer"
+      responses:
+        '200':
+          description: Successful response.
+        '400':
+          description: Bad Request.
+          schema: {}
+        '500':
+          description: Internal server error
+          schema: {}
+    delete:
+      x-success_http_code: '200'
+      description: Deletes a product
+      tags:
+          - Product - Delete
+      parameters:
+        - 
+          name: "id"
+          in: "path"
+          description: "Product ID to delete"
+          required: true
+          type: "integer"
+      responses:
+        '200':
+          description: Successful response.
+          schema: {
+           $ref: '#/definitions/AllProductDetails'
+          }
+        '500':
+          description: Internal server error
+          schema: {}          
+  
+      
+definitions:
+  AllProductDetails:
+    type: array
+    items:
+        allOf:
+          - properties:
+              id:
+                type: number
+                description: Unique product identifier
+              name:
+                type: string
+                description: Name of the Product
+              current_price:
+                type: object
+                properties:
+                  value:
+                    type: number
+                    description: Name of the Product
+                  currency_code:
+                    type: string
+                    description: Currency code of the cost
+
+  ProductDetails:
+    allOf:
+      - properties:
+          name:
+            type: string
+            description: Name of the Product
+          current_price:
+            type: object
+            properties:
+              value:
+                type: integer
+                description: Name of the Product
+              currency_code:
+                type: string
+                description: Currency code of the cost
