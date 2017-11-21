@@ -57,17 +57,32 @@ public class MyRetailRestApiAppController {
 	@RequestMapping("/products")
 	public ResponseEntity<List<Product>> getAllProducts() throws Exception{
 		List<Product> productsNameList = restTemplate.getAllProductsNames();
+		List<Price> priceList = myretailService.getAllPriceDetails();
 		List<Product> productsList = new ArrayList<>();
-		if(productsNameList != null){
-			productsNameList.forEach(e -> {
-				Price price = null;
-				try {
-					price = myretailService.getPriceByProductId(e.getProductId());
-				} catch (Exception e1) {
-					e1.printStackTrace();
-				}
-				e.setPrice(price);
-				productsList.add(e);
+//		if(productsNameList != null){
+//			productsNameList.forEach(e -> {
+//				Price price = null;
+//				try {
+//					price = myretailService.getPriceByProductId(e.getProductId());
+//				} catch (Exception e1) {
+//					e1.printStackTrace();
+//				}
+//				e.setPrice(price);
+//				productsList.add(e);
+//			});
+//		}
+		
+		if(productsNameList !=null){
+			productsNameList.stream().forEach(product -> {
+				
+				priceList.stream().forEach(price -> { 
+					
+					if(product.getProductId() == price.getProductId()){
+						Product productObj = product;
+						productObj.setPrice(price);
+						productsList.add(productObj);
+					}
+				});
 			});
 		}
 		return new ResponseEntity<List<Product>>(productsList,HttpStatus.OK);
