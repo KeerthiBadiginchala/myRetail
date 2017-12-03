@@ -3,8 +3,10 @@ package com.kb.myRetailRestApi.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
+
 
 
 
@@ -56,9 +58,9 @@ public class MyRetailRestApiAppController {
 	
 	@RequestMapping("/products")
 	public ResponseEntity<List<Product>> getAllProducts() throws Exception{
-		List<Product> productsNameList = restTemplate.getAllProductsNames();
-		List<Price> priceList = myretailService.getAllPriceDetails();
-		List<Product> productsList = new ArrayList<>();
+//		List<Product> productsNameList = restTemplate.getAllProductsNames();
+//		List<Price> priceList = myretailService.getAllPriceDetails();
+//		List<Product> productsList = new ArrayList<>();
 //		if(productsNameList != null){
 //			productsNameList.forEach(e -> {
 //				Price price = null;
@@ -72,20 +74,44 @@ public class MyRetailRestApiAppController {
 //			});
 //		}
 		
-		if(productsNameList !=null){
-			productsNameList.stream().forEach(product -> {
+//		if(productsNameList !=null){
+//			productsNameList.stream().forEach(product -> {
+//				
+//				if(priceList!=null){
+//				
+//				priceList.stream().forEach(price -> { 
+//					
+//					if(product.getProductId() == price.getProductId()){
+//						Product productObj = product;
+//						productObj.setPrice(price);
+//						productsList.add(productObj);
+//					}
+//				});
+//				}
+//			});
+//		}
+		Optional<List<Product>> productsNameList = Optional.of(restTemplate.getAllProductsNames());
+		Optional<List<Price>> priceList = Optional.of(myretailService.getAllPriceDetails());
+		Optional<List<Product>> productsList = Optional.of(new ArrayList<>());
+		
+		if(productsNameList.isPresent()){
+			productsNameList.get().stream().forEach(product -> {
 				
-				priceList.stream().forEach(price -> { 
+				if(priceList.isPresent()){
+				
+				priceList.get().stream().forEach(price -> { 
 					
 					if(product.getProductId() == price.getProductId()){
 						Product productObj = product;
 						productObj.setPrice(price);
-						productsList.add(productObj);
+						productsList.get().add(productObj);
 					}
 				});
+				}
 			});
 		}
-		return new ResponseEntity<List<Product>>(productsList,HttpStatus.OK);
+
+		return new ResponseEntity<List<Product>>(productsList.get(),HttpStatus.OK);
 	}
 
 	@RequestMapping("/products/{id}")

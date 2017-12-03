@@ -45,7 +45,7 @@ public class ProductNameController {
 		List<Product> productList = productservice.getAllProductNames();
 		return new ResponseEntity<List<Product>>(productList, HttpStatus.OK);
 	}
-
+	
     @RequestMapping(value = "/products", method=RequestMethod.POST)
     public ResponseEntity<Product> addProduct(@RequestBody Product product) throws SQLException{
     	Product productObj=null;
